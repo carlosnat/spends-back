@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const familySchema = mongoose.Schema({
+const operationSchema = mongoose.Schema({
     _id: Schema.Types.ObjectId,
     family: [{ type: Schema.Types.ObjectId, ref: 'Family' }],
     category: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
@@ -10,4 +11,4 @@ const familySchema = mongoose.Schema({
     creationDate: { type: Date }
 });
 
-module.exports = mongoose.model('Families', familySchema);
+module.exports = mongoose.model('Operation', operationSchema);
