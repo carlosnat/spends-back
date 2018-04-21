@@ -3,10 +3,15 @@ const mongoose = require('mongoose');
 const familySchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String },
-    members: [{
+    logo: { type: String },
+    members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    spendsGroups: [{ type: Schema.Types.ObjectId, ref: 'Story' }],
+    categories: [{ type: Schema.Types.ObjectId, ref: 'Story' }],
+    operations: [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+   /*  members: [{
         _id: mongoose.Schema.Types.ObjectId,
         name: { type: String },
-        age: { type: Number },
+        age: { type: Number },  
         rol: { 
             type: String, 
             enum: ['parent', 'child', 'grandparent', 'guess'], 
@@ -29,7 +34,7 @@ const familySchema = mongoose.Schema({
         amount: { type: Number },
         observation: { type: String },
         spendDate: { type: String }
-    }]
+    }] */
 });
 
-module.exports = mongoose.model('Families', familySchema);
+module.exports = mongoose.model('Family', familySchema);

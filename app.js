@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-const GroupRoutes = require('./api/familyGroup/group.routes');
+
+const FamilyRoutes = require('./api/family/family.routes');
+
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -9,7 +11,6 @@ const mongoose = require('mongoose');
 
 // mongoose.connect('mongodb://localhost:27017/family-spend');
 mongoose.connect("mongodb://cars:DTEbjBDR3Od6Iim5@cluster0-shard-00-00-zdfxp.mongodb.net:27017,cluster0-shard-00-01-zdfxp.mongodb.net:27017,cluster0-shard-00-02-zdfxp.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin")
-
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -21,11 +22,11 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get('/', async (req, res) => {    
-    res.json({msg:'welcome to family-spend-api', saved})
+app.get('/', async (req, res) => {
+    res.json({msg:'welcome to family-spend-api'})
 })
 
-app.use('/family', GroupRoutes)
+app.use('/family', FamilyRoutes)
 
 app.use((req, res, next) => {
     const error = new Error('Not found');
@@ -41,6 +42,5 @@ app.use((error, req, res, next) => {
         }
     })
 })
-
 
 module.exports = app;
