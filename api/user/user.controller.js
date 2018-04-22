@@ -18,3 +18,35 @@ exports.signup = async (req, res) => {
         res.status(500).send({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
     }
 }
+
+exports.login = async (req, res) => {
+    try {
+        const userData = await User.find({email: req.body.email}).lean()
+        if(userData.length < 1){
+            return res.status(401).json({
+                message: 'User dont exist '
+            });
+        }
+        const bcryptCompare = await bcrypt.compare(req.body.password, userData[0].password)
+        if (!bcryptCompare) {
+            return res.status(401).json({
+                message: 'Auth failed check username or password'
+            });
+        }
+        const token = jwt.sign({
+                email: userData[0].email,
+                userId: userData[0]._id
+            },
+            'process.env.JWT_KEY',
+            {
+                expiresIn: "1h"
+            }
+        )
+        res.status(200).json({
+            message: 'Auth successful',
+            token: token
+        })
+    } catch (error) {
+        res.status(500).send({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) });         
+    }
+}
