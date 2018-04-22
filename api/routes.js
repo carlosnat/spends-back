@@ -2,27 +2,39 @@
 
 module.exports = function(app, model, path){
     
-    app.get('/api/'+path, function(req, res){
-        model.find(req.body).then(function(data){
-            res.json(data);
-        })
+    app.get('/api/'+path, async (req, res) => {
+        try {
+            const modelFound = await  model.find(req.body);
+            res.json(modelFound);
+        } catch (err) {
+            res.status(502).json({err})
+        }
     })
 
-    app.post('/api/'+path, function(req, res){
-        model.create(req.body).then(function(data){
-            res.json(data);
-        });
+    app.post('/api/'+path, async (req, res) => {
+        try {
+            const modelCreated = await model.create(req.body);
+            res.json(modelCreated);
+        } catch (err) {
+            res.status(502).json({err})
+        }
     })
 
-    app.put('/api/'+path, function(req, res){
-        model.findOneAndUpdate({_id:req.body._id}, req.body).then(function(data){
-            res.json(data);
-        });
+    app.put('/api/'+path, async (req, res) => {
+        try {
+            const modelUpdated = await model.findByIdAndUpdate(req.body._id, req.body, {new: true});
+            res.json(modelUpdated);
+        } catch (err) {
+            res.status(502).json({err})
+        }
     });
 
-    app.delete('/api/'+path, function(req, res){
-        model.remove({_id:req.query._id}).then(function(data){
-            res.json(data);
-        });
+    app.delete('/api/'+path, async (req, res) => {
+        try {
+            const modelDeleted = await model.remove({_id:req.query._id});
+            res.json(modelDeleted);
+        } catch (err) {
+            res.status(502).json({err})
+        }
     });
 }
