@@ -1,78 +1,20 @@
-const Families = require('./group.model');
 const mongoose = require('mongoose');
+const User = require('./user.model');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-
-exports.getAllFamilies = async (req, res) => {
+exports.signup = async (req, res) => {
+    const checkEmail = await User.find({email: req.body.email}).lean();
+    if (checkEmail.length > 0){
+        res.status(500).json({error_code:10, error_msg:'Email user already existed'});
+    }
     try {
-        const families = await Families.find().lean();
-        res.json({families})
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.createFamily = async (req, res) => {
-    try {
-        const product = new Families({
-            _id: mongoose.Types.ObjectId(),
-            name: req.body.name,
-        })
-        const familySaved = await product.save();
-        res.json({familySaved})
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.addMember = async (req, res) => {
-    try {
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
-            $push: {
-                members: req.body
-            }
-        }, { new: true })
-        res.json(groupFound)
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.addGroupSpend = async (req, res) => {
-    try {
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
-            $push: {
-                spendgroups: req.body
-            }
-        }, { new: true })
-        res.json(groupFound)
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.addGroupCategory = async (req, res) => {
-    try {
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
-            $push: {
-                spenscategory: req.body
-            }
-        }, { new: true })
-        res.json(groupFound)
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.addSpend = async (req, res) => {
-    try {
+        const hash = await bcrypt.hash(req.body.password, 10)
         req.body.createdAt = Date.now();
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
-            $push: {
-                spends: req.body
-            }
-        }, { new: true })
-        res.json(groupFound)
+        req.body.password = hash;
+        const userCreated = await User.create(req.body)
+        res.json({userCreated})
     } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
+        res.status(500).send({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
+    }
 }
