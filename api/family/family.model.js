@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const familySchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     name: { type: String },
     logo: { type: String },
     members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
