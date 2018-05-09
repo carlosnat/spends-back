@@ -1,7 +1,6 @@
 const express = require('express');
+const cors = require('cors')
 const app = express();
-
-const FamilyRoutes = require('./api/family/family.routes');
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
@@ -11,16 +10,7 @@ const mongoose = require('mongoose');
 
 mongoose.connect(process.env.DATABASE);
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-type, Accept, Authorization');
-    if (req.method === 'OPTIONS'){
-        res.header('Access-Contro-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-        res.status(200).json({});
-    }
-    next();
-})
-
+app.use(cors())
 app.get('/', async (req, res) => {
     res.json({msg:'welcome to family-spend-api'})
 })

@@ -44,7 +44,8 @@ exports.login = async (req, res) => {
         )
         res.status(200).json({
             message: 'Auth successful',
-            token: token
+            token: token,
+            userId: userData[0]._id
         })
     } catch (error) {
         res.status(500).send({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) });         

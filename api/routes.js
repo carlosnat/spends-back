@@ -30,6 +30,7 @@ module.exports = function(app, model, path){
     });
 
     app.delete('/api/'+path, async (req, res) => {
+        console.log('query', req.query._id)
         try {
             const modelDeleted = await model.remove({_id:req.query._id});
             res.json(modelDeleted);

@@ -7,7 +7,8 @@ const familySchema = mongoose.Schema({
     members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     spendsGroups: [{ type: Schema.Types.ObjectId, ref: 'SpendGroup' }],
     categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
-    operations: [{ type: Schema.Types.ObjectId, ref: 'Operation' }]
+    operations: [{ type: Schema.Types.ObjectId, ref: 'Operation' }],
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 module.exports = mongoose.model('Family', familySchema);

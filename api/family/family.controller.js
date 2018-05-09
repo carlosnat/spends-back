@@ -1,10 +1,10 @@
-const Families = require('./group.model');
+const Families = require('./family.model');
 const mongoose = require('mongoose');
 
 
 exports.getAllFamilies = async (req, res) => {
     try {
-        const families = await Families.find().lean();
+        const families = await Families.find({ createdBy: req.query.userId}).lean();
         res.json({families})
     } catch (error) {
         res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
@@ -14,8 +14,8 @@ exports.getAllFamilies = async (req, res) => {
 exports.createFamily = async (req, res) => {
     try {
         const product = new Families({
-            _id: mongoose.Types.ObjectId(),
             name: req.body.name,
+            createdBy: req.body.userId
         })
         const familySaved = await product.save();
         res.json({familySaved})
