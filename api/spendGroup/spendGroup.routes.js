@@ -1,8 +1,13 @@
 'use strict'
 
-var spendGroupModel = require('./spendGroup.model');
-var routes = require('../routes');
+const spendController = require('./spendGroup.controller');
+const spendGroupModel = require('./spendGroup.model');
+const routes = require('../routes');
 
 module.exports = function(app){
-    routes(app, spendGroupModel, 'spendGroup');
+    app.get('/api/spendgroup/:familyId', spendController.getAllGroups);
+    app.post('/api/spendgroup', spendController.createGroup);
+    app.put('/api/spendgroup', spendController.editGroup);
+    app.delete('/api/spendgroup', spendController.deleteGroup);
+    routes(app, spendGroupModel, 'spendgroup');
 }

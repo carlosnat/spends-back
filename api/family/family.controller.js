@@ -1,10 +1,11 @@
 const Families = require('./family.model');
+const Groups = require('../spendGroup/spendGroup.model');
 const mongoose = require('mongoose');
 
 
 exports.getAllFamilies = async (req, res) => {
     try {
-        const families = await Families.find({ createdBy: req.query.userId}).lean();
+        const families = await Families.find({ createdBy: req.params.userId}).lean();
         res.json({families})
     } catch (error) {
         res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
@@ -37,14 +38,14 @@ exports.addMember = async (req, res) => {
     }    
 }
 
-exports.addGroupSpend = async (req, res) => {
+exports.addGroupSpend = async (group) => {
     try {
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
+        const familyUpdated = await Families.findOneAndUpdate(group.belongsTo, { 
             $push: {
-                spendgroups: req.body
+                spendsGroups: group
             }
         }, { new: true })
-        res.json(groupFound)
+        return familyUpdated
     } catch (error) {
         res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
     }    
