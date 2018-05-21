@@ -7,7 +7,7 @@ const operationSchema = mongoose.Schema({
     amount: { type: Number },
     description: { type: String },
     occurrenceDate: { type: Date },
-    creationDate: { type: Date },
+    createdAt: { type: Date },
     image: { type: Schema.Types.Mixed }
 });
 

@@ -5,10 +5,11 @@ const familySchema = mongoose.Schema({
     name: { type: String },
     logo: { type: String },
     members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    spendsGroups: [{ type: Schema.Types.Mixed}],
-    categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
-    operations: [{ type: Schema.Types.ObjectId, ref: 'Operation' }],
-    createdBy: { type: Schema.Types.ObjectId, ref: 'User' }
+    spendsGroups: [{ type: Schema.Types.Mixed }],
+    categories: [{ type: Schema.Types.Mixed }],
+    operations: [{ type: Schema.Types.Mixed }],
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
+    createdAt: { type: Date }
 });
 
 module.exports = mongoose.model('Family', familySchema);
