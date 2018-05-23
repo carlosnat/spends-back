@@ -2,7 +2,7 @@
 
 var operationModel = require('./operation.model');
 var routes = require('../routes');
-
+const operationController = require('./operation.controller');
 var cloudinary = require('cloudinary');
 var cloudinaryStorage = require('multer-storage-cloudinary');
 var multer = require('multer');
@@ -26,6 +26,8 @@ const parser = multer({ storage: storage });
 
 module.exports = function(app){
 
+    app.post('/api/operation', operationController.create);
+    app.get('/api/operation/family/:idFamily', operationController.getAll);
     app.post('/api/operation/upload', parser.single('image'), function (req, res) {
         res.json(req.file);
     });

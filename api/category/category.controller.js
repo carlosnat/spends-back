@@ -1,5 +1,4 @@
 const Category = require('./category.model');
-const mongoose = require('mongoose');
 const familyController = require('../family/family.controller');
 const Family = require('../family/family.model');
 

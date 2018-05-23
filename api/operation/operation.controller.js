@@ -1,78 +1,27 @@
-const Families = require('./group.model');
-const mongoose = require('mongoose');
+const Operation = require('./operation.model');
+const moment = require('moment');
 
-
-exports.getAllFamilies = async (req, res) => {
+exports.create = async (req, res) => {
     try {
-        const families = await Families.find().lean();
-        res.json({families})
+        const data = req.body;
+        data.occurrenceDate = moment(data.occurrenceDate, 'YYYY-MM-DD');
+        data.createdAt = Date.now();
+        const newOperation = new Operation(data);
+        const operationSaved = await newOperation.save();
+        res.json(operationSaved);
     } catch (error) {
         res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
     }    
 }
 
-exports.createFamily = async (req, res) => {
+exports.getAll = async (req, res) => {
     try {
-        const product = new Families({
-            _id: mongoose.Types.ObjectId(),
-            name: req.body.name,
-        })
-        const familySaved = await product.save();
-        res.json({familySaved})
+        const operations = await Operation.find({family: req.params.idFamily})
+                            .populate('family', 'name')
+                            .populate('group', ['name', 'color'])
+                            .populate('category', ['name', 'icono']);
+        res.json(operations);
     } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.addMember = async (req, res) => {
-    try {
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
-            $push: {
-                members: req.body
-            }
-        }, { new: true })
-        res.json(groupFound)
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.addGroupSpend = async (req, res) => {
-    try {
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
-            $push: {
-                spendgroups: req.body
-            }
-        }, { new: true })
-        res.json(groupFound)
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.addGroupCategory = async (req, res) => {
-    try {
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
-            $push: {
-                spenscategory: req.body
-            }
-        }, { new: true })
-        res.json(groupFound)
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
-}
-
-exports.addSpend = async (req, res) => {
-    try {
-        req.body.createdAt = Date.now();
-        const groupFound = await Families.findOneAndUpdate(req.params.idFamily, { 
-            $push: {
-                spends: req.body
-            }
-        }, { new: true })
-        res.json(groupFound)
-    } catch (error) {
-        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
-    }    
+        res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) });         
+    }
 }
