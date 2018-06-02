@@ -13,7 +13,7 @@ exports.getAllFamilies = async (req, res) => {
 
 exports.createFamily = async (req, res) => {
     try {
-        const product = new Families({
+        const product = new Family({
             name: req.body.name,
             createdBy: req.body.userId
         })

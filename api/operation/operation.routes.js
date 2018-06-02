@@ -1,11 +1,12 @@
 'use strict'
 
-var operationModel = require('./operation.model');
-var routes = require('../routes');
+const operationModel = require('./operation.model');
+const routes = require('../routes');
 const operationController = require('./operation.controller');
-var cloudinary = require('cloudinary');
-var cloudinaryStorage = require('multer-storage-cloudinary');
-var multer = require('multer');
+const cloudinary = require('cloudinary');
+const cloudinaryStorage = require('multer-storage-cloudinary');
+const multer = require('multer');
+const randomstring = require("randomstring");
 
 cloudinary.config({ 
     cloud_name: 'supercars', 
@@ -15,22 +16,21 @@ cloudinary.config({
 
 const storage = cloudinaryStorage({
     cloudinary: cloudinary,
-    folder: 'folder-name',
+    folder: 'operations-images',
     allowedFormats: ['jpg', 'png'],
     filename: function (req, file, cb) {
-        cb(undefined, 'my-file-name');
+        console.log('req', req.file);
+        cb(undefined, `${Date.now()}-${randomstring.generate()}`);
     }
 });
 
 const parser = multer({ storage: storage });
 
 module.exports = function(app){
-
     app.post('/api/operation', operationController.create);
     app.get('/api/operation/family/:idFamily', operationController.getAll);
     app.post('/api/operation/upload', parser.single('image'), function (req, res) {
         res.json(req.file);
     });
-
     routes(app, operationModel, 'operation');
 }
