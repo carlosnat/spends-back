@@ -4,8 +4,12 @@ const Family = require('../family/family.model');
 
 exports.getAllGroups = async (req, res) => {
     try {
-        const groups = await Group.find({ belongsToFamily: req.params.familyId}).lean();
-        res.json({groups})
+        if (req.params.familyId){
+            const groups = await Group.find({ belongsToFamily: req.params.familyId}).lean();
+            res.json({groups})
+        } else {
+            res.json([]);
+        }
     } catch (error) {
         res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) }); 
     }    
