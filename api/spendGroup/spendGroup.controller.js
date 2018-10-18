@@ -28,7 +28,9 @@ exports.createGroup = async (req, res) => {
 
 exports.editGroup = async (req, res) => {
     try {
-        const groupUpdated = await Group.findByIdAndUpdate(req.body._id, req.body);
+        console.log('editCategory', req.body);
+        const groupUpdated = await Group.findByIdAndUpdate(req.body._id, req.body, {new: true});
+        console.log('groupUpdated', groupUpdated);
         const familyToUpdate = await Family.findById(req.body.belongsToFamily).lean();
         familyToUpdate.spendsGroups.forEach(element => {
            if(element._id.toString() === req.body._id){
@@ -45,11 +47,11 @@ exports.editGroup = async (req, res) => {
 
 exports.deleteGroup = async (req, res) => {
     try {
-        const groupToDelete = await Group.findById(req.query._id).lean();
+        const groupToDelete = await Group.findById(req.params.id).lean();
         const familyToUpdate = await Family.findById(groupToDelete.belongsToFamily).lean();
-        familyToUpdate.spendsGroups = familyToUpdate.spendsGroups.filter( element => element._id.toString() !== req.query._id);
+        familyToUpdate.spendsGroups = familyToUpdate.spendsGroups.filter( element => element._id.toString() !== req.params.id);
         const familyUpdated = await Family.findByIdAndUpdate(familyToUpdate._id, familyToUpdate, { new: true });
-        const modelDeleted = await Group.remove({_id:req.query._id});
+        const modelDeleted = await Group.remove({_id:req.params.id});
         res.json(familyUpdated);
     } catch (err) {
         res.status(502).json({err})

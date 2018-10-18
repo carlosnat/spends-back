@@ -26,9 +26,10 @@ exports.editCategory = async (req, res) => {
 
 exports.deleteCategory = async (req, res) => {
     try {
-        const categoryToDelete = await Category.findById(req.query._id).lean();
+        console.log('delete', req.params.id);
+        const categoryToDelete = await Category.findById(req.params.id).lean();
         const familyUpdated = await familyController.removeCategory(categoryToDelete);
-        const modelDeleted = await Category.remove({_id:req.query._id});
+        const modelDeleted = await Category.remove({_id:req.params.id});
         res.json(familyUpdated);
     } catch (error) {
         res.json({error: JSON.parse(JSON.stringify(error, Object.getOwnPropertyNames(error))) });

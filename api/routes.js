@@ -4,7 +4,7 @@ module.exports = function(app, model, path){
     
     app.get('/api/'+path, async (req, res) => {
         try {
-            const modelFound = await  model.find(req.body);
+            const modelFound = await model.find(req.body);
             res.json(modelFound);
         } catch (err) {
             res.status(502).json({err})
