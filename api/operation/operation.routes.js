@@ -30,6 +30,7 @@ module.exports = function (app) {
   app.post('/api/operation', operationController.create);
   app.get('/api/operation/family/:idFamily', operationController.getAll);
   app.post('/api/operation/upload', parser.single('image'), (req, res) => {
+    console.log(req.file);
     res.json(req.file);
   });
   routes(app, operationModel, 'operation');
