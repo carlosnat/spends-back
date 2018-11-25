@@ -8,8 +8,12 @@ class DataBase {
     }
 
     connect() {
-        mongoose.connect(this.dataBase, () => {
-            this.dbDebuger('Connecting to database -> ', this.dataBase);
+        return mongoose.connect(this.dataBase)
+        .then( res => {
+            this.dbDebuger('connected to database -> ', this.dataBase);
+        })
+        .catch( err => {
+            this.dbDebuger('Connecting to database -> ', err);
         });
     }
 }
