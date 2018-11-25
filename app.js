@@ -1,15 +1,12 @@
 const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const thirdPartyModules = require('./middleware-third-party/third-party');
+const database = require('./api/database');
 
 const app = express();
+thirdPartyModules(app);
+(async() => await database.connect())();
 
-mongoose.connect(process.env.DATABASE);
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors());
-app.get('/', async (req, res) => {
+app.get('/api/health', async (req, res) => {
   res.json({ msg: 'welcome to family-spend-api' });
 });
 
