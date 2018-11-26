@@ -1,6 +1,11 @@
+const userRoutes = require('./user/user.routes');
 
+module.exports = (app) => {
+  const serverBasePath = '/api'
+  app.use(`${serverBasePath}${userRoutes.basePath}`, userRoutes.routes);
+}
 
-module.exports = function (app, model, path) {
+/* module.exports = function (app, model, path) {
   app.get(`/api/${path}`, async (req, res) => {
     try {
       const modelFound = await model.find(req.body);
@@ -37,4 +42,4 @@ module.exports = function (app, model, path) {
       res.status(502).json({ err });
     }
   });
-};
+}; */
