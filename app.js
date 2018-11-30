@@ -2,7 +2,7 @@ const express = require('express');
 const thirdPartyModules = require('./middleware-third-party/third-party');
 const database = require('./api/database');
 const appRoutes = require('./api/routes');
-
+const errorMiddleware = require('./middleware/error');
 const app = express();
 thirdPartyModules(app);
 (async() => await database.connect())();
@@ -17,19 +17,6 @@ require('./api/category/category.routes')(app);
 require('./api/operation/operation.routes')(app);
 require('./api/spendGroup/spendGroup.routes')(app); */
 
-app.use((req, res, next) => {
-  const error = new Error('Not found');
-  error.status = 400;
-  next(error);
-});
-
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message,
-    },
-  });
-});
+app.use(errorMiddleware);
 
 module.exports = app;

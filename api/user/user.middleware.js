@@ -5,7 +5,7 @@ const schema = Joi.object().keys({
     name: Joi.string().alphanum().min(3).max(30).required(),
     lastname: Joi.string().alphanum().min(3).max(30).required(),
     avatar: Joi.string().alphanum().min(3).max(30).required(),
-    password: [Joi.string(), Joi.number()],
+    password: Joi.string().alphanum().min(8).max(12).required(),
     birthdate: Joi.date(),
     email: Joi.string().email({
         minDomainAtoms: 2
@@ -19,7 +19,7 @@ function validateReqParams(req, res, next) {
     } else {
         console.log(result.error.details[0].message)
         res.status(403).json({
-        error_msg: result.error.details[0].message
+            error_msg: result.error.details[0].message
         });
     }
 }

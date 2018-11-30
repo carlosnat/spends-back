@@ -22,6 +22,7 @@ class UserModel {
             console.log('superrrrr', this.user);
             this.user = await this.user.save();
         } catch (error) {
+            console.log('error', error);
             this.errorHandle(error);
         }
     }
@@ -75,11 +76,12 @@ class UserModel {
         return token;
     }
 
-    static serrorHandle(error){
+    static errorHandle(error){
         userDebugger(error);
         return {
             error_code: 10,
-            error_msg: 'Email user already existed'
+            error_msg: 'Email user already existed',
+            error
         };
 
         /* {

@@ -31,7 +31,8 @@
     "multer-storage-cloudinary": "^2.2.1",
     "nodemon": "^1.17.3",
     "prettier": "^1.14.3",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "winston": "^3.1.0"
   },
   "engines": {
     "node": "8.11.1"
