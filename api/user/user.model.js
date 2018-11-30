@@ -83,10 +83,6 @@ class UserModel {
             error_msg: 'Email user already existed',
             error
         };
-
-        /* {
-            message: 'Auth failed check username or password',
-        } */
     }
 }
 

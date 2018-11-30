@@ -17,7 +17,6 @@ function validateReqParams(req, res, next) {
     if (result.error === null) {
         next();
     } else {
-        console.log(result.error.details[0].message)
         res.status(403).json({
             error_msg: result.error.details[0].message
         });
