@@ -4,26 +4,25 @@ const regexpExpressRegexp = /^\/\^\\\/(?:(:?[\w\\.-]*(?:\\\/:?[\w\\.-]*)*)|(\(\?
 const regexpExpressParam = /\(\?:\(\[\^\\\/]\+\?\)\)/g
 
 const hasParams = (pathRegexp) => {
-    return regexpExpressParam.test(pathRegexp)
+    return regexpExpressParam.test(pathRegexp);
 }
 
 const getRouteMethods = (route) => {
-    const methods = []
+    let method = '';
 
-    for (let method in route.methods) {
-        if (method === '_all') continue
-
-        methods.push(method.toUpperCase())
+    for (let r_method in route.methods) {
+        if (r_method === '_all') continue
+        method = (r_method.toUpperCase());
     }
 
-    return methods
+    return method;
 }
 
 const parseExpressRoute = (route, basePath) => {
     return {
         path: basePath + (basePath && route.path === '/' ? '' : route.path),
-        methods: getRouteMethods(route)
-    }
+        method: getRouteMethods(route)
+    };
 }
 
 const parseExpressPath = (expressPathRegexp, params) => {
@@ -57,7 +56,7 @@ const parseEndpoints = (app, basePath, endpoints) => {
             endpoints.push(parseExpressRoute(stackItem.route, basePath));
         } else if (stackItem.name === 'router' || stackItem.name === 'bound dispatch') {
             if (regexpExpressRegexp.test(stackItem.regexp)) {
-                const parsedPath = parseExpressPath(stackItem.regexp, stackItem.keys)
+                const parsedPath = parseExpressPath(stackItem.regexp, stackItem.keys);
                 parseEndpoints(stackItem.handle, basePath + '/' + parsedPath, endpoints);
             } else {
                 parseEndpoints(stackItem.handle, basePath, endpoints);
@@ -65,7 +64,7 @@ const parseEndpoints = (app, basePath, endpoints) => {
         }
     })
   
-    return endpoints
+    return endpoints;
   }
 
 function explore_api (app) {

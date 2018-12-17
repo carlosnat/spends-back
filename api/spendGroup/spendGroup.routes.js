@@ -6,7 +6,6 @@ routes.post('/', spendController.createGroup);
 routes.put('/', spendController.editGroup);
 routes.delete('/:id', spendController.deleteGroup);
 
-
 module.exports = {
   basePath: '/spendgroup',
   routes
