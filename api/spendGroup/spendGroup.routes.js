@@ -1,13 +1,13 @@
-
-
 const spendController = require('./spendGroup.controller');
-const spendGroupModel = require('./spendGroup.model');
-const routes = require('../routes');
+const routes = require('express').Router();
 
-module.exports = function (app) {
-  app.get('/api/spendgroup/:familyId', spendController.getAllGroups);
-  app.post('/api/spendgroup', spendController.createGroup);
-  app.put('/api/spendgroup', spendController.editGroup);
-  app.delete('/api/spendgroup/:id', spendController.deleteGroup);
-  routes(app, spendGroupModel, 'spendgroup');
-};
+routes.get('/:familyId', spendController.getAllGroups);
+routes.post('/', spendController.createGroup);
+routes.put('/', spendController.editGroup);
+routes.delete('/:id', spendController.deleteGroup);
+
+
+module.exports = {
+  basePath: '/spendgroup',
+  routes
+}

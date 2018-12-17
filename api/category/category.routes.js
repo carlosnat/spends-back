@@ -1,13 +1,13 @@
-
-
-const categoryModel = require('./category.model');
 const categoryController = require('./category.controller');
-const routes = require('../routes');
+const routes = require('express').Router();
 
-module.exports = function (app) {
-  // app.get('/api/category/:familyId', categoryController.getAllGroups);
-  app.post('/api/category', categoryController.createCategory);
-  app.put('/api/category', categoryController.editCategory);
-  app.delete('/api/category/:id', categoryController.deleteCategory);
-  routes(app, categoryModel, 'category');
-};
+//routes.get('/', categoryController.getAllGroups);
+routes.post('/', categoryController.createCategory);
+routes.put('/', categoryController.editCategory);
+routes.delete('/:id', categoryController.deleteCategory);
+
+module.exports = {
+  basePath: '/category',
+  routes
+}
+

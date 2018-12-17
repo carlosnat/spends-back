@@ -1,13 +1,12 @@
-
-
-const familyModel = require('./family.model');
-const routes = require('../routes');
 const familyController = require('./family.controller');
+const routes = require('express').Router();
 
-module.exports = function (app) {
-  app.post('/api/family', familyController.createFamily);
-  app.post('/api/family/spendgroup/:idFamily', familyController.addGroupSpend);
-  app.get('/api/family/user/:userId', familyController.getAllFamilies);
-  app.get('/api/family/:familyId', familyController.getById);
-  routes(app, familyModel, 'family');
-};
+routes.post('/', familyController.createFamily);
+routes.post('/spendgroup/:idFamily', familyController.addGroupSpend);
+routes.get('/user/:userId', familyController.getAllFamilies);
+routes.get('/:familyId', familyController.getById);
+
+module.exports = {
+  basePath: '/family',
+  routes
+}
