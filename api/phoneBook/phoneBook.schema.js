@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const phoneBookSchema = mongoose.Schema({
+  service: { type: String },
   path: { type: String },
   method: { type: String },
 });

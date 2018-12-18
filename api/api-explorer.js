@@ -73,6 +73,7 @@ function explore_api (app) {
     const routes = parseEndpoints(app);
     routes.forEach(async (route) => {
         const service = {
+            service: 'api-family',
             path: route.path,
             method: route.method
         };
