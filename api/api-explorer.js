@@ -67,11 +67,21 @@ const parseEndpoints = (app, basePath, endpoints) => {
     return endpoints;
   }
 
+const PhoneBook = require('./phoneBook/phoneBook.schema');
+
 function explore_api (app) {
     const routes = parseEndpoints(app);
-    routes.forEach(route => {
-        apiExplorerDebugger('route', route);
-    })
+    routes.forEach(async (route) => {
+        const service = {
+            path: route.path,
+            method: route.method
+        };
+        try {
+            await PhoneBook.findOneAndUpdate(service, service, {upsert: true});
+        } catch (error) {
+            apiExplorerDebugger('error', error);
+        }
+    });
 }
 
 module.exports = explore_api;
