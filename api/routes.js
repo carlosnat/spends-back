@@ -4,13 +4,15 @@ const categoryRoutes = require('./category/category.routes');
 const familyRoutes = require('./family/family.routes');
 const operationRoutes = require('./operation/operation.routes');
 const spendGroupRoutes = require('./spendGroup/spendGroup.routes');
+const phoneBookRoutes = require('./phoneBook/phoneBook.routes');
 
 const routeGroup = {
   userRoutes,
   categoryRoutes,
   familyRoutes,
   operationRoutes,
-  spendGroupRoutes
+  spendGroupRoutes,
+  phoneBookRoutes
 }
 
 module.exports = (app) => {
