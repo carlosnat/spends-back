@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const roleSchema = mongoose.Schema({
   name: { type: String },
   services: [{ 
-      url: { type: String },
+      service: { type: String },
+      path: { type: String },
       method: { type: String }  
     }],
 });

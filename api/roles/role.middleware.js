@@ -5,8 +5,9 @@ const schema = Joi.object().keys({
     name: Joi.string().alphanum().min(3).max(30).required(),
     services: Joi.array().items(
         Joi.object({
-            url: Joi.string().required(),
-            method: Joi.string().valid(['get', 'post', 'delete', 'put']).required()
+            service: Joi.string().min(3).max(30).required(),
+            path: Joi.string().min(3).max(30).required(),
+            method: Joi.string().valid(['GET', 'POST', 'DELETE', 'PUT']).required()
         }).required()
     ).required()
 });

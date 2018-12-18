@@ -6,9 +6,10 @@ const getAll = (req, res)=> {
     res.json({msg: 'ok'});
 }
 
-const create = (req, res) => {
-    console.log(req.body);
-    res.json({msg: 'ok'});
+const create = async (req, res) => {
+    const roleCreated = new Role(req.body);
+    const roleSaved = await roleCreated.save(); 
+    res.json({role: roleSaved});
 }
 
 exports.getAll = asyncMiddleware(getAll);
