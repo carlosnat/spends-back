@@ -7,7 +7,8 @@ const schema = Joi.object().keys({
         Joi.object({
             service: Joi.string().min(3).max(30).required(),
             path: Joi.string().min(3).max(30).required(),
-            method: Joi.string().valid(['GET', 'POST', 'DELETE', 'PUT']).required()
+            method: Joi.string().valid(['GET', 'POST', 'DELETE', 'PUT']).required(),
+            hash: Joi.number().required()
         }).required()
     ).required()
 });

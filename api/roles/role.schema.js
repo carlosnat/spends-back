@@ -5,7 +5,8 @@ const roleSchema = mongoose.Schema({
   services: [{ 
       service: { type: String },
       path: { type: String },
-      method: { type: String }  
+      method: { type: String },
+      hash: { type: String }
     }],
 });
 

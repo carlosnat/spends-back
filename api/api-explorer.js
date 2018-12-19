@@ -1,4 +1,5 @@
 const apiExplorerDebugger = require('debug')('app:api-explorer');
+const stringHash = require('string-hash');
 
 const regexpExpressRegexp = /^\/\^\\\/(?:(:?[\w\\.-]*(?:\\\/:?[\w\\.-]*)*)|(\(\?:\(\[\^\\\/]\+\?\)\)))\\\/.*/
 const regexpExpressParam = /\(\?:\(\[\^\\\/]\+\?\)\)/g
@@ -75,7 +76,8 @@ function explore_api (app) {
         const service = {
             service: 'api-family',
             path: route.path,
-            method: route.method
+            method: route.method,
+            hash: stringHash(`api-family${route.path}${route.method}`)
         };
         try {
             await PhoneBook.findOneAndUpdate(service, service, {upsert: true});
