@@ -47,6 +47,8 @@ const parseExpressPath = (expressPathRegexp, params) => {
 
 const parseEndpoints = (app, basePath, endpoints) => {
 
+    
+
     const stack = app.stack || (app._router && app._router.stack);
   
     endpoints = endpoints || [];
