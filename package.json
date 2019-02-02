@@ -6,7 +6,8 @@
   "scripts": {
     "test": "nyc --reporter=html mocha",
     "start": "nodemon server.js",
-    "pretest": "eslint --ignore-path .gitignore ."
+    "pretest": "eslint --ignore-path .gitignore .",
+    "eslintfix": "eslint --fix ."
   },
   "author": "",
   "license": "ISC",

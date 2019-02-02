@@ -14,14 +14,14 @@ const routeGroup = {
   operationRoutes,
   spendGroupRoutes,
   phoneBookRoutes,
-  rolesRoutes
-}
+  rolesRoutes,
+};
 
 module.exports = (app) => {
-  const serverBasePath = '/api'
-  for (let route in routeGroup) {
+  const serverBasePath = '/api';
+  for (const route in routeGroup) {
     const endpoint = `${serverBasePath}${routeGroup[route].basePath}`;
     app.use(endpoint, routeGroup[route].routes);
   }
   apiExplorer(app);
-}
+};

@@ -8,5 +8,5 @@ routes.get('/', (req, res, next) => {
 
 module.exports = {
   basePath: '/phonebook',
-  routes
-}
+  routes,
+};

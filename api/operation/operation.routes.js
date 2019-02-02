@@ -10,5 +10,5 @@ routes.post('/upload', parser.single('image'), (req, res) => {
 
 module.exports = {
   basePath: '/operation',
-  routes
-}
+  routes,
+};

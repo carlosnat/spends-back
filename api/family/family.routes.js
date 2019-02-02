@@ -8,5 +8,5 @@ routes.get('/:familyId', familyController.getById);
 
 module.exports = {
   basePath: '/family',
-  routes
-}
+  routes,
+};
