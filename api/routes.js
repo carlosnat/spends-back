@@ -23,6 +23,5 @@ module.exports = (app) => {
     const endpoint = `${serverBasePath}${routeGroup[route].basePath}`;
     app.use(endpoint, routeGroup[route].routes);
   }
-  console.log(app._router);
   apiExplorer(app);
 }

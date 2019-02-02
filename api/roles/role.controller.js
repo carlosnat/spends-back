@@ -3,8 +3,8 @@ const asyncMiddleware = require('../../middleware/async');
 const Role = require('./role.schema');
 
 const getAll = async (req, res)=> {
-    const role = await Role.findById(req.params.role_id);
-    res.json(role);
+    
+    res.json({msg:'ok'});
 }
 
 const create = async (req, res) => {

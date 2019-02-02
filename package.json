@@ -30,6 +30,7 @@
     "multer": "^1.3.0",
     "multer-storage-cloudinary": "^2.2.1",
     "nodemon": "^1.17.3",
+    "path-to-regexp": "^2.4.0",
     "prettier": "^1.14.3",
     "randomstring": "^1.1.5",
     "string-hash": "^1.1.3",

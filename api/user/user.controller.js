@@ -8,8 +8,7 @@ async function signup(req, res) {
     res.json(userCreated);
 };
 
-async function login(req, res) {
-  if (!await User.alreadyExist(req.body.email)) return res.json(User.errorHandle());  
+async function login(req, res) { 
     const userOnDataBase = await User.findByEmail(req.body.email);
     const someUser = new User(userOnDataBase);
     if (!await User.checkPassword(req.body.password, someUser.user.password)) return res.json(someUser.errorHandle());  
