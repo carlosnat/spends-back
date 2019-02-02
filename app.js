@@ -6,11 +6,7 @@ const errorMiddleware = require('./middleware/error');
 
 const app = express();
 thirdPartyModules(app);
-
-async function connectToDataBase() {
-  await database.connect();
-}
-connectToDataBase();
+(async () => await database.connect())();
 appRoutes(app);
 
 app.get('/api', async (req, res) => {

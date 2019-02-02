@@ -7,7 +7,7 @@ const regexpExpressParam = /\(\?:\(\[\^\\\/]\+\?\)\)/g;
 const hasParams = pathRegexp => regexpExpressParam.test(pathRegexp);
 
 const getRouteMethods = (route) => {
-  const method = Object.key(route.methods).map((key) => {
+  const method = Object.keys(route.methods).map((key) => {
     if (key !== '_all') {
       return key.toUpperCase();
     }
